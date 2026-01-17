@@ -1,11 +1,16 @@
 
-.header{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    
+*{
+    font-family: 'Times New Roman', Times, serif;
 }
-.links{
-    display: flex;
-    justify-content: space-around;
+
+header{
+
+    border-bottom: 1px   dotted rgba(122, 117, 117, 0.685);
+
+
+}
+ul {
+    margin: 0;
+    list-style-type: none;
+    
 }
