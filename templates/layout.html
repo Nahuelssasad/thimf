@@ -43,9 +43,12 @@
             {% block main %}
             {% endblock %}
         </main>
+        {% if session['user_id'] %}
         <footer class="footer  ">
             <span>&copy; 2024 Thimf</span>
         </footer>
+        {% endif %} 
+
     </div>
     
 </body>

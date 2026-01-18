@@ -2,7 +2,19 @@
 {% block title %}Inicio{% endblock %}
 
 {% block main %}    
-    <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
-        <h1>Bienvenido a Thimf</h1>
-    </div>
+
+<form action="/register" method="post">
+
+    <input type="text" name="username" placeholder="User" class="form-control my-2" required>
+    <input type="password" name="password" placeholder="Password" class="form-control my-2" required>
+    <input type="password" name="password" placeholder="Confirm Password" class="form-control my-2" required>
+    <button type="submit" class="btn btn-primary w-100 my-2">Register</button>
+
+</form>
+
+
+
+
+
+
 {% endblock %}

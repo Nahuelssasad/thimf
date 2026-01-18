@@ -5,7 +5,7 @@ from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 from cachelib.file import FileSystemCache
-
+from helpers import login_required
 
 # Configure application
 app = Flask(__name__)
@@ -23,10 +23,13 @@ Session(app)
 #now = datetime.now()
 date_now =  datetime.now().strftime("%A, %d de %B de %Y, %H:%M:%S")
 
+
+
+"""      """
 @app.after_request
 def after_request(response):
-    """Ensure responses aren't cached"""
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    """Ensure responses aren't cached"""  #Actualizacion del contenido
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"  
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
@@ -35,22 +38,42 @@ def after_request(response):
 
 
 @app.route("/")
-@login_required
+
 def index():
     return render_template("index.html")
 
-@app.route("/login")
+@app.route("/login",methods=["GET","POST"])
 def login():
+    
+    # Forget any user_id
+    session.clear()
+
+    #User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+        #Ensure username was submitted
+        if not request.form.get("username"):
+            flash("Debe ingresar un nombre de usuario")
+            return render_template("login.html") 
+
+        #Redirect user to home page
+        return redirect("/publications")
+
+
+
+
+
+    
     return render_template("login.html")
+
+
+
 
 @app.route("/register")
 def register():
     return render_template("register.html")
 
-    return render_template("index.html")
-@app.rout("/publications")
-
 @app.route("/publications")
+@login_required
 def publications():
     return render_template("publications.html")
 
