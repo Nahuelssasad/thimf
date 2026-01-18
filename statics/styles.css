@@ -1,0 +1,16 @@
+
+*{
+    font-family: 'Times New Roman', Times, serif;
+}
+
+header{
+
+    border-bottom: 1px   dotted rgba(122, 117, 117, 0.685);
+
+
+}
+ul {
+    margin: 0;
+    list-style-type: none;
+    
+}
