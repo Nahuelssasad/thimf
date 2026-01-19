@@ -45,7 +45,7 @@ def index():
 def login():
     
     # Forget any user_id
-    session.clear()
+    #session.clear()
 
     error = None
 
