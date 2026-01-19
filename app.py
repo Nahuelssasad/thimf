@@ -47,18 +47,20 @@ def login():
     # Forget any user_id
     session.clear()
 
+    error = None
+
     #User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
         #Ensure username was submitted
         if not request.form.get("username"):
             flash("Debe ingresar un nombre de usuario")
-            return render_template("index.html") 
+            return redirect(url_for("login")) 
 
 
         #Ensure password was submitted
         if not request.form.get("password"):
             flash("Debe ingresar una contraseña")
-            return render_template("login.html")
+            return redirect(url_for("login"))
         
 
         #Connect to db  
@@ -181,14 +183,6 @@ def register():
 @login_required
 def publications():
     return render_template("publications.html")
-
-
-
-
-
-
-
-
 
 #Initialize server flask
 if __name__ == "__main__":

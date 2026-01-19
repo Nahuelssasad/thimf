@@ -3,6 +3,10 @@
 
 {% block main %}    
 
+
+{% if error %}
+    <p><strong>{{error}}</strong></p>
+{% endif %}
 <form action="/login" method="post">
 
     <input type="text" name="username" placeholder="User" class="form-control my-2" autocomplete="off" >
