@@ -125,32 +125,29 @@ def register():
         #validation username
         if  not username :
             flash('Missing username','error')
-            print(" missing username")
             return render_template('register.html')
         #Validation length username
         if len(username) < 3:
             flash('username must have 3 or more characters')
-            print(" username length")
             return render_template('register.html')
         #validation password
         if not password:
             flash('Missing password','error')
-            print(" missing password")
             return render_template('register.html')
         if len(password) < 8 :
             flash('Password must have 8 or more characters')
-            print(" password length")
+            
             return render_template('register.html')
 
         #Validation confirmation
         if not confirmation :
             flash('Must confirm your password')
-            print(" missing confirmation")
+            
             return render_template('register.html')
         #Verification password is equal confirmation
         if confirmation != password :
             flash('Password is not equal to confirmation ','error')
-            print(" password not equal confirmation")
+            
             return render_template('register.html')
         #Verification users existed
         with sqlite3.connect('thimf.db') as con :
@@ -158,7 +155,7 @@ def register():
             existing_user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
             if existing_user :
                 flash('Username already exists','error')
-                print(" existing user")
+                
                 return render_template('register.html')
             #insert a new user in database
 
@@ -166,14 +163,13 @@ def register():
 
                 db.execute('INSERT INTO users(username,hash_password) VALUES (?,?)', (username, generate_password_hash(password)))
                 flash('Account created sucessfully!!You can now log in','success')
-                print(" user created")
+                
                 return redirect(url_for('login'))
             
             except Exception as e:
                 flash('Error try create the account.Try again',)
-                print(" error creating user")  
+                
                 return render_template("register.html")
-
 
 
     #Get information of register

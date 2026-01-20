@@ -14,18 +14,7 @@
 <body>
     <div class="container-fluid container-div">
         <!-- FLASH MESSAGES-->
-         {% with messagges = get_flashed_messages() %}
-            {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                    <li>    {{message }}</li>
-                    {% endfor %}
-                </ul>
 
-
-            {% endif %}
-
-         {% endwith  %}
 
         {%if session['id'] %}
             <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between"  >
@@ -54,6 +43,10 @@
 
         <main>
             {% block main %}
+                {% for message in get_flashed_messages() %}
+                    <div class="alert alert-info">{{ message }}</div>
+                {% endfor %}
+
             {% endblock %}
         </main>
         {% if session['id'] %}
