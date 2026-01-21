@@ -4,24 +4,23 @@
 {% block main %}
 
   
-{% for message in get_flashed_messages() %}
-            <div class="alert alert-info">{{ message }}</div>
-{% endfor %}
-
-    
-
-<form action="/register" method="post">
-
-    <input type="text" name="username" placeholder="User" class="form-control my-2" autocomplete="off" >
-    <input type="password" name="password" placeholder="Password" class="form-control my-2" autocomplete="off">
-    <input type="password" name="confirmation" placeholder="Confirm Password" class="form-control my-2" autocomplete="off" >
-    <button type="submit" class="btn btn-primary w-100 my-2">Register</button>
-
-</form>
 
 
+    <div class="container-fluid d-flex justify-content-center align-items-center  ">
+        <div id = "form" class="container mt-3" >
+        <form action="/register" method="post" >
 
+            <input type="text" name="username" placeholder="User" class="form-control my-2 form-control-lg" autocomplete="off" >
+            <input type="password" name="password" placeholder="Password" class="form-control my-2 form-control-lg" autocomplete="off">
+            <input type="password" name="confirmation" placeholder="Confirm Password" class=" form-control form-control-lg my-2" autocomplete="off" >
+            {% for message in get_flashed_messages() %}
+                <div class="alert {{ class_error }}">{{ message }}</div>
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-outline-primary w-100 my-2">Iniciar sesión</button>
 
-
+        </form>
+        </div>
+    </div>
 
 {% endblock %}

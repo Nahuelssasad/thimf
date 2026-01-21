@@ -2,21 +2,20 @@
 {% block title %}Inicio{% endblock %}
 
 {% block main %}    
-{% for message in get_flashed_messages() %}
-            <div class="alert alert-info">{{ message }}</div>
-{% endfor %}
-<div class="container-md d-flex justify-content-center align-items-start vh-100 ">
-<form action="/login" method="post" class="form my-2" >
 
-    <input type="text" name="username" placeholder="User" class="form-control my-2" autocomplete="off" >
-    <input type="password" name="password" placeholder="Password" class="form-control my-2" autocomplete="off">
-    <button type="submit" class="btn btn-primary w-100 my-2">Iniciar sesión</button>
+    <div class="container-fluid d-flex justify-content-center align-items-center  ">
+        <div id = "form" class="container mt-3" >
+        <form action="/login" method="post" >
 
-</form>
-</div>
-
-
-
+            <input type="text" name="username" placeholder="User" class="form-control my-2 form-control-lg" autocomplete="off" >
+            <input type="password" name="password" placeholder="Password" class="form-control my-2 form-control-lg" autocomplete="off">
+            <button type="submit" class="btn btn-outline-primary w-100 my-2">Iniciar sesión</button>
+            {% for message in get_flashed_messages() %}
+            <div class="alert {{ class_error }}">{{ message }}</div>
+            {% endfor %}    
+        </form>
+        </div>
+    </div>
 
 
 {% endblock %}

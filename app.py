@@ -54,13 +54,13 @@ def login():
         #Ensure username was submitted
         if not request.form.get("username"):
             flash("Debe ingresar un nombre de usuario")
-            return redirect(url_for("login")) 
+            return render_template("login.html",class_error='alert-warning')
 
 
         #Ensure password was submitted
         if not request.form.get("password"):
             flash("Debe ingresar una contraseña")
-            return redirect(url_for("login"))
+            return render_template("login.html",class_error='alert-warning')
         
 
         #Connect to db  
@@ -77,7 +77,7 @@ def login():
             #check password
                 if  not check_password_hash(result['hash_password'],request.form.get('password')):
                     flash("Contraseña incorrecta")
-                    return render_template("login.html")
+                    return render_template("login.html",class_error='alert-warning')
                 
                 #remember user has logged in
                 session['id'] = result['id']
@@ -88,7 +88,7 @@ def login():
                 return redirect("/")
             else:
                 flash("Tienes que registrarte")
-                return render_template("login.html")
+                return render_template("login.html",class_error='alert-warning')
             
      
             
@@ -115,7 +115,7 @@ def register():
 
     #Clear session
     session.clear()
-
+    
     if request.method ==  'POST':
         #Get data of form
         username = request.form.get('username')
@@ -124,37 +124,38 @@ def register():
 
         #validation username
         if  not username :
+            
             flash('Missing username','error')
-            return render_template('register.html')
+            return render_template('register.html',class_error='alert-warning')
         #Validation length username
         if len(username) < 3:
-            flash('username must have 3 or more characters')
-            return render_template('register.html')
+            flash('username must have 3 or more characters',class_error='alert-warning')
+            return render_template('register.html',class_error='alert-warning')
         #validation password
         if not password:
             flash('Missing password','error')
-            return render_template('register.html')
+            return render_template('register.html',class_error='alert-warning')
         if len(password) < 8 :
             flash('Password must have 8 or more characters')
             
-            return render_template('register.html')
+            return render_template('register.html',class_error='alert-warning')
 
         #Validation confirmation
         if not confirmation :
             flash('Must confirm your password')
             
-            return render_template('register.html')
+            return render_template('register.html',class_error='alert-warning')
         #Verification password is equal confirmation
         if confirmation != password :
             flash('Password is not equal to confirmation ','error')
             
-            return render_template('register.html')
+            return render_template('register.html',class_error='alert-warning')
         #Verification users existed
         with sqlite3.connect('thimf.db') as con :
             db = con.cursor()
             existing_user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
             if existing_user :
-                flash('Username already exists','error')
+                flash('Username already exists','error',class_error='alert-warning')
                 
                 return render_template('register.html')
             #insert a new user in database
@@ -164,12 +165,12 @@ def register():
                 db.execute('INSERT INTO users(username,hash_password) VALUES (?,?)', (username, generate_password_hash(password)))
                 flash('Account created sucessfully!!You can now log in','success')
                 
-                return redirect(url_for('login'))
+                return render_template('register.html',class_error='alert-success')
             
             except Exception as e:
                 flash('Error try create the account.Try again',)
                 
-                return render_template("register.html")
+                return render_template("register.html",class_error='alert-warning')
 
 
     #Get information of register

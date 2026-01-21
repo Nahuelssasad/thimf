@@ -1,6 +1,8 @@
 
 *{
     font-family: 'Times New Roman', Times, serif;
+    overflow-x: hidden;
+    
 }
 
 
@@ -50,4 +52,42 @@ ul {
     margin: 0;
     list-style-type: none;
     
+}
+#form
+{
+    max-width: 500px;
+    height: 100vh;
+    
+    
+}
+#form form{
+    
+    margin-top: 60px;
+}
+form input{
+    background-color: #cad3d4 !important;
+    margin-top: 7px;
+}
+
+form input:hover{
+    border-color: #8b5cf6 !important;
+}
+form input:focus{
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25) !important;
+    outline: none !important;
+}
+button{
+    max-width: 200px;
+}
+
+.btn-outline-primary {
+    color: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+.btn-outline-primary:hover {
+    background-color: #8b5cf6;
+    border-color: #8b5cf6;
+    color: white;
 }
