@@ -2,7 +2,62 @@
 {% block title %}Inicio{% endblock %}
 
 {% block main %}    
-    <div class="d-flex justify-content-center align-items-center">
-        <h1>Bienvenido a Thimf</h1>
+        <h1 class="display-1 mt-5 pt-4 text-center">Bienvenido a Thimf</h1>
+        <div class="px-4 py-5 my-4 text-center">
+            <h1 class="fw-bold text-body-emphasis h1">El punto de encuentro entre talento y oportunidad</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4 fs-5">
+                        Thimf conecta personas con habilidades reales con head-hunters, agencias y empresas que 
+                        buscan perfiles destacados. Mostrá lo que sabés hacer y abrí la puerta a nuevas oportunidades.
+                </p>
+            </div>
+        </div >
+        <div class="container mt-5">
+            <h2 class=" my-3 ">Tus Publicaciones</h2>
+            <div class="grid ">
+                {% for post in posts %}
+                <div class="items">
+                    <img src="animal.jpg">
+                    <div class="info">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="w-100 text-center text-md-start my-2 container-button"><button class="btn btn-info" type="button" id="openModalBtn">Publicar</button></div>
+        </div>
+
+
+        <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id = "closeModalBtn" class = "close">&times; </span>
+            <div class="modal-ContainerContent">
+                <div class="modal-formImg">
+                        <label for="file-upload" class="custom-file-upload">Seleccionar Archivo</label>
+                        <input id="file-upload" type="file"  form="formInfo">
+                        <img id="imagen-reemplazo" src="" style="display: none; width: 100%; height: 100%; object-fit: cover; ">
+                    
+                    
+                </div>
+                <div class="modal-formInfo">
+                    <form action="" id ="formInfo">
+                        <div class="campo">
+                                <label for="title">Titulo</label>
+                                <textarea name="title" id="" ></textarea>
+                        </div>
+                        <div class="campo">
+                            <label for="description">Descripcion</label>
+                            <textarea name="description" id="" ></textarea>
+                        </div>
+                        <button id="button-formPublication">Publicar</button>
+                    </form>
+                </div>
+                
+            </div>
+
+        </div>
     </div>
+    </div>
+
 {% endblock %}
