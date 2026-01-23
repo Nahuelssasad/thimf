@@ -3,7 +3,7 @@ const imagenReemplazo = document.getElementById('imagen-reemplazo');
  const label = document.querySelector('.custom-file-upload');
 input.addEventListener('change', function() {
     const file = this.files[0];
-    console.log(file);
+    
     if (file) {
         const reader = new FileReader();
         reader.onload = function() {

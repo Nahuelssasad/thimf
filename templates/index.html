@@ -12,9 +12,11 @@
                 </p>
             </div>
         </div >
-        <div class="container mt-5">
+        <div class="container " id="margin-container">
             <h2 class=" my-3 ">Tus Publicaciones</h2>
+            {% if posts%}
             <div class="grid ">
+                
                 {% for post in posts %}
                 <div class="items">
                     <img src="animal.jpg">
@@ -25,6 +27,10 @@
                 </div>
                 {% endfor %}
             </div>
+            {% else %}
+                <p style="width: 100%; text-align: start; margin: 30px 0px;padding: 15px 0px;font-size: 18px;">No hay publicaciones aún.</p>
+
+            {% endif%}
             <div class="w-100 text-center text-md-start my-2 container-button"><button class="btn btn-info" type="button" id="openModalBtn">Publicar</button></div>
         </div>
 
@@ -35,22 +41,31 @@
             <div class="modal-ContainerContent">
                 <div class="modal-formImg">
                         <label for="file-upload" class="custom-file-upload">Seleccionar Archivo</label>
-                        <input id="file-upload" type="file"  form="formInfo">
+                        <input id="file-upload" type="file"  form="formInfo" accept="image/*,video/*" name="image">
                         <img id="imagen-reemplazo" src="" style="display: none; width: 100%; height: 100%; object-fit: cover; ">
                     
                     
                 </div>
                 <div class="modal-formInfo">
-                    <form action="" id ="formInfo">
+                    <form action="/posts" id ="formInfo" method="post">
                         <div class="campo">
                                 <label for="title">Titulo</label>
-                                <textarea name="title" id="" ></textarea>
+                                {%if message %}
+                                    <textarea name="title" id="title"  placeholder="{{message}}"></textarea>
+                                {% else %}
+                                    <textarea name="title" id="title" ></textarea>
+                                {% endif %}
                         </div>
                         <div class="campo">
                             <label for="description">Descripcion</label>
-                            <textarea name="description" id="" ></textarea>
+                            {%if messageDesc %}
+                                <textarea name="description" id="description"  placeholder="{{messageDesc}}"></textarea>
+                            {% else %}
+                                <textarea name="description" id="description" ></textarea>
+                            {% endif %}
+                            
                         </div>
-                        <button id="button-formPublication">Publicar</button>
+                        <button id="btn-post" type="submit" form="formInfo" >Publicar</button>
                     </form>
                 </div>
                 
@@ -59,5 +74,6 @@
         </div>
     </div>
     </div>
+    
 
 {% endblock %}

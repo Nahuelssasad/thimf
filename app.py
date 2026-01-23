@@ -176,6 +176,31 @@ def register():
     #Get information of register
     return render_template("register.html")
 
+@app.route("/posts", methods=["POST"])
+def posts():
+
+
+    
+        #dates form
+    title = request.form.get('title')
+    description = request.form.get('description')
+    image = request.form.get('image')
+        
+    #Verification of variables 
+    message = None
+    messageDesc = None
+    if not title:
+        message = "Debe ingresar un titulo"
+    if not description:
+        messageDesc = "Debe ingresar una descripcion"
+    
+
+
+    
+    return render_template("index.html", message=message, messageDesc=messageDesc)
+        
+
+
 @app.route("/publications")
 @login_required
 def publications():

@@ -22,9 +22,10 @@ header{
     padding: 0;
 }
 .footer{
-   text-align: center;
-   color: rgb(88, 87, 87);
+    text-align: center;
+    color: rgb(88, 87, 87);
     padding: 5px;
+    margin-top: 25px;
 }
 #header_title{
     font-size: 25px;
@@ -133,14 +134,161 @@ button{
  .container-button{
     padding-left: 15px;
     padding-bottom: 15px;
+    font-weight: bold;
 }
 .container-button button{
     margin-top: 15px !important;
  }
+ #margin-container{
+    margin-top: 15rem;
+   
+ }  
 .info p {
     width: 100%;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+}
+.modal-content {
+    background-color: white;
+    display: flex;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(58, 4, 133, 0.2);
+    width: 80%;
+    max-width: 500px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+}
+.close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color:red;
+}
+.modal-ContainerContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    
+}
+
+.modal-ContainerContent, .modal-formImg, .modal-formInfo {
+   height: 100%;
+   width: 100%;
+}
+
+.modal-formImg{
+    display: flex;
+    align-items: center;
+    
+
+}
+
+.modal-formInfo{
+    display: flex;
+    align-items: center;
+}
+.modal-formInfo form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-between;
+    height: 80%;
+  }
+  .modal-formInfo .campo textarea{
+
+    border: none;
+    display: block;
+    resize: none;
+    box-sizing:border-box ;
+    padding: 0;
+    font-family: inherit;
+    font-size: 12px;
+    scrollbar-width: none;
+    border-bottom: 2px solid #676262;
+    height: 18px;
+    width: 100% !important;
+    max-height: 72px;
+
+  }
+@media (width > 560px) {
+    .modal-formInfo .campo {
+        width: 200px !important;
+    }
+    
+}
+
+
+
+  form textarea::-webkit-scrollbar {
+    display: none;
+  }
+  .campo textarea:focus {
+    outline: none;
+    
+  }
+  .campo{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .campo label{
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+  }
+  .custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border: none;
+  }
+  input[type="text"]:focus {
+    outline: none;
+    
+  }
+
+  input[type="file"] {
+    display: none; /* Oculta el input real */
+    
+  }
+#btn-post {
+    padding: 10px;
+    background-color: rgba(107, 13, 214, 0.853);
+    color:#fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+#btn-post:hover {
+    background-color: rgb(65, 3, 136);
+  }
 
