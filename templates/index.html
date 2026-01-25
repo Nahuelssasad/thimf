@@ -19,7 +19,11 @@
                 
                 {% for post in posts %}
                 <div class="items">
-                    <img src="animal.jpg">
+                    {% if post.image  %}
+                        <img src="{{url_for('static',filename='uploads/' + post.image)}}">
+                    {% else%}
+                        <img src="/static/uploads/none.png">
+                    {% endif %}
                     <div class="info">
                         <h3>{{ post.title }}</h3>
                         <p>{{ post.description }}</p>
@@ -55,7 +59,7 @@
                     
                 </div>
                 <div class="modal-formInfo">
-                    <form action="/posts" id ="formInfo" method="post">
+                    <form action="/posts" id ="formInfo" method="post"  enctype="multipart/form-data">
                         <div class="campo">
                                 <label for="title">Titulo</label>
                                 <textarea name="title" id="title" ></textarea>

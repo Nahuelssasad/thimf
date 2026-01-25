@@ -1,11 +1,13 @@
 
 import sqlite3
+import os
 from flask import Flask, flash, redirect, render_template, request, session,url_for
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
 from datetime import datetime
 from cachelib.file import FileSystemCache
-from helpers import login_required
+from helpers import login_required,allowed_file
 
 # Configure application
 app = Flask(__name__)
@@ -16,6 +18,12 @@ app.config["SESSION_TYPE"] = "cachelib"
 app.config['SESSION_SERIALIZATION_FORMAT'] = 'json'
 app.config["SESSION_PERMANENT"] = False #Deleted when the browser is closed
 app.config["SESSION_CACHELIB"] = FileSystemCache(cache_dir="flask_session")  # Esta es la línea clave
+
+#Configure Uploading files
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png','jpg', 'jpeg','gif', 'webp','bmp'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 Session(app)
 
@@ -40,7 +48,14 @@ def after_request(response):
 @app.route("/")
 
 def index():
-   return render_template("index.html")
+   
+
+   posts = None
+   with sqlite3.connect("thimf.db") as con :
+       db = con.cursor()
+       posts = db.execute("SELECT img,title,description FROM publications")
+
+   return render_template("index.html",posts =posts)
 
 @app.route("/login",methods=["GET","POST"])
 def login():
@@ -178,32 +193,37 @@ def register():
 
 def posts():
 
-        #dates form
-    
+
+    #dates form
     title = request.form.get('title')
     description = request.form.get('description')
-    image = request.form.get('image')
+    image = request.files.get('image')
     username =session['username']
     
+    #post
 
+    #Verifications
     if not title:
         title = "Nada"
     if not description :
         description = "Nada"
-    if not image:
-        image = "Nada"
+    if not image or image.filename == "":
+        image = "No se selecciono un archivo"
+
     
     
+    filename = secure_filename(image.filename)
+    path =os.path.join(app.config['UPLOAD_FOLDER'],filename)
+    image.save(path)
+
+    #Route for sqlite
+    route_image = filename
+
+
     with sqlite3.connect("thimf.db") as con:
         db = con.cursor()
 
-        db.execute("INSERT INTO publications(username,title,datatime,img) VALUES (?,?,?,?)",(username,title,image,date_now))
-    
-
-
-
-
-
+        db.execute("INSERT INTO publications(username,title,datatime,img) VALUES (?,?,?,?)",(username,title,filename,date_now))
 
     return render_template("index.html")
         
