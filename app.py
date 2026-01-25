@@ -38,8 +38,9 @@ def after_request(response):
 
 
 @app.route("/")
+
 def index():
-    return render_template("index.html")
+   return render_template("index.html")
 
 @app.route("/login",methods=["GET","POST"])
 def login():
@@ -81,6 +82,7 @@ def login():
                 
                 #remember user has logged in
                 session['id'] = result['id']
+                session['username'] = result['username']
                 #Redirect to page where user want to go
                 next_page = request.form.get("next")
                 if next_page:
@@ -89,11 +91,7 @@ def login():
             else:
                 flash("Tienes que registrarte")
                 return render_template("login.html",class_error='alert-warning')
-            
-     
-            
-            
-            
+
     #User reached route via GET (as by clicking a link or via redirect)
     else:
 
@@ -177,27 +175,37 @@ def register():
     return render_template("register.html")
 
 @app.route("/posts", methods=["POST"])
+
 def posts():
 
-
-    
         #dates form
+    
     title = request.form.get('title')
     description = request.form.get('description')
     image = request.form.get('image')
-        
-    #Verification of variables 
-    message = None
-    messageDesc = None
+    username =session['username']
+    
+
     if not title:
-        message = "Debe ingresar un titulo"
-    if not description:
-        messageDesc = "Debe ingresar una descripcion"
+        title = "Nada"
+    if not description :
+        description = "Nada"
+    if not image:
+        image = "Nada"
+    
+    
+    with sqlite3.connect("thimf.db") as con:
+        db = con.cursor()
+
+        db.execute("INSERT INTO publications(username,title,datatime,img) VALUES (?,?,?,?)",(username,title,image,date_now))
     
 
 
-    
-    return render_template("index.html", message=message, messageDesc=messageDesc)
+
+
+
+
+    return render_template("index.html")
         
 
 
