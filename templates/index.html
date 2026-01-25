@@ -59,11 +59,11 @@
                         <div class="campo">
                             <label for="description">Descripcion</label>
                             {%if messageDesc %}
-                                <textarea name="description" id="description"  placeholder="{{messageDesc}}"></textarea>
+                                <textarea name="description" id="description"  placeholder="{{messageDesc}}" required></textarea>
                             {% else %}
-                                <textarea name="description" id="description" ></textarea>
+                                <textarea name="description" id="description"  required></textarea>
                             {% endif %}
-                            
+                          
                         </div>
                         <button id="btn-post" type="submit" form="formInfo" >Publicar</button>
                     </form>

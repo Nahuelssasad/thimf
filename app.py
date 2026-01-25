@@ -191,8 +191,12 @@ def posts():
     messageDesc = None
     if not title:
         message = "Debe ingresar un titulo"
+        flash(message)
+        return redirect(url_for('index'))
     if not description:
         messageDesc = "Debe ingresar una descripcion"
+        flash(messageDesc)
+        return redirect(url_for('index'))
     
 
 

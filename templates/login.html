@@ -11,7 +11,7 @@
             <input type="password" name="password" placeholder="Password" class="form-control my-2 form-control-lg" autocomplete="off">
             <button type="submit" class="btn btn-outline-primary w-100 my-2">Iniciar sesión</button>
             {% for message in get_flashed_messages() %}
-            <div class="alert {{ class_error }}">{{ message }}</div>
+            <div class="alert alert-warning">{{ message }}</div>
             {% endfor %}    
         </form>
         </div>
