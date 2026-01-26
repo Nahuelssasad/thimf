@@ -1,6 +1,6 @@
 const input = document.getElementById('file-upload');
 const imagenReemplazo = document.getElementById('imagen-reemplazo');
- const label = document.querySelector('.custom-file-upload');
+const label = document.querySelector('.custom-file-upload');
 input.addEventListener('change', function() {
     const file = this.files[0];
     
