@@ -13,14 +13,15 @@
             </div>
         </div >
         <div class="container " id="margin-container">
-            <h2 class=" my-3 ">Tus Publicaciones</h2>
-            {% if posts%}
+            <h2 class=" my-3 py-2 ">Tus Publicaciones</h2>
+            {% if posts %}
             <div class="grid ">
                 
                 {% for post in posts %}
                 <div class="items">
-                    {% if post.image  %}
-                        <img src="{{url_for('static',filename='uploads/' + post.image)}}">
+                    {% if post.img  %}
+                        <img src="{{url_for('static',filename='uploads/' + post.img)}}">
+                        
                     {% else%}
                         <img src="/static/uploads/none.png">
                     {% endif %}
@@ -28,6 +29,16 @@
                         <h3>{{ post.title }}</h3>
                         <p>{{ post.description }}</p>
                     </div>
+                    <form action="/deletePost" method="post">
+                        <input type="hidden" value="{{post.title}}" name="title">
+                        <input type="hidden" value="{{post.description}}" name="description">
+                        <input type="hidden" value="{{post.img}}" name="filename">
+                        <input type="hidden" value="{{post.username}}" name="username">
+                        <button class="btn btn-danger">
+                            Delete
+                        </button>
+
+                    </form>
                 </div>
                 {% endfor %}
             </div>
@@ -35,7 +46,7 @@
                 <p style="width: 100%; text-align: start; margin: 30px 0px;padding: 15px 0px;font-size: 18px;">No hay publicaciones aún.</p>
 
             {% endif%}
-            <div class="w-100 text-center text-md-start my-2 container-button">
+            <div class="w-100 text-center text-md-start my-5 container-button">
                 {% if session['id'] %} 
                     <button class="btn btn-info" type="button" id="openModalBtn">Publicar</button>
                 {% else %}

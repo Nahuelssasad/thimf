@@ -46,16 +46,18 @@ def after_request(response):
 
 
 @app.route("/")
-
+@login_required
 def index():
+    if not session['id'] :
+        return redirect("/")
+    posts = None
+    with sqlite3.connect("thimf.db") as con :
+        con.row_factory = sqlite3.Row
+    
+        
+        posts = con.execute("SELECT img,title,description,username FROM publications WHERE username = ?",(session['username' ],)).fetchall()
    
-
-   posts = None
-   with sqlite3.connect("thimf.db") as con :
-       db = con.cursor()
-       posts = db.execute("SELECT img,title,description FROM publications")
-
-   return render_template("index.html",posts =posts)
+    return render_template("index.html",posts =posts)
 
 @app.route("/login",methods=["GET","POST"])
 def login():
@@ -99,7 +101,7 @@ def login():
                 session['id'] = result['id']
                 session['username'] = result['username']
                 #Redirect to page where user want to go
-                next_page = request.form.get("next")
+                next_page = '/'
                 if next_page:
                     return redirect(next_page)
                 return redirect("/")
@@ -219,14 +221,38 @@ def posts():
     #Route for sqlite
     route_image = filename
 
-
+    posts = None
     with sqlite3.connect("thimf.db") as con:
-        db = con.cursor()
-
-        db.execute("INSERT INTO publications(username,title,datatime,img) VALUES (?,?,?,?)",(username,title,filename,date_now))
-
-    return render_template("index.html")
         
+        con.row_factory = sqlite3.Row
+
+        con.execute("INSERT INTO publications(username,title,datatime,img,description) VALUES (?,?,?,?,?)",(username,title,date_now,filename,description))
+       
+        
+    
+    return redirect("/")
+        
+@app.route("/deletePost",methods = ['POST'])
+@login_required
+def deletePost():
+    #delete register
+    if request.method == 'POST':
+        title = request.form.get('title')
+        description = request.form.get('description')
+        filename = request.form.get("filename")
+        username = request.form.get('username')
+        print(username)
+        print(description)
+        print(filename)
+        print(title)
+
+        with sqlite3.connect('thimf.db') as con:
+            con.row_factory = sqlite3.Row
+
+            con.execute("DELETE FROM publications WHERE username = ? AND description  = ? AND  img = ? AND title = ? ",(username,description,filename,title))
+
+    return redirect("/")
+
 
 
 @app.route("/publications")
