@@ -20,8 +20,8 @@
             <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between"  >
                 <div class="col-md-3 text-center px-md-2"><a  class ="nav-link text-md-start" id="header_title" href= "/">Thimf</a></div>
                 <ul class="nav col-12 justify-content-center  col-md-auto   ">
-                    <li class="px-2"><a   class="nav-link"   href="#openModalBtn"     style="cursor: pointer;">Publicar</a></li>
-                    <li class="px-2"><a   class="nav-link"   href="/">Buscar talento</a></li>
+                    <li class="px-2"><a   class="nav-link"   href="/"     style="cursor: pointer;">Publicar</a></li>
+                    <li class="px-2"><a   class="nav-link"   href="/search">Buscar talento</a></li>
                 </ul>
 
                 <div class=" col-md-3  px-md-2"><a  class="nav-link  text-md-end d-none d-md-block"    href="/logout">Salir</a></div>
@@ -43,9 +43,7 @@
 
         <main>
             {% block main %}
-                {% for message in get_flashed_messages() %}
-                    <div class="alert alert-info">{{ message }}</div>
-                {% endfor %}
+               
 
             {% endblock %}
         </main>
@@ -56,9 +54,8 @@
         {% endif %} 
 
     </div>
-    <script src="/static/textarea.js"></script>
-    <script src="/static/inputImg.js"></script>
-    <script src="/static/close.js"></script>
+    {% block scripts %}{% endblock %}
+
 
     
     

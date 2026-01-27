@@ -1,7 +1,7 @@
 
 import sqlite3
 import os
-from flask import Flask, flash, redirect, render_template, request, session,url_for
+from flask import Flask, flash, redirect, render_template, request, session,url_for,jsonify
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
@@ -241,10 +241,7 @@ def deletePost():
         description = request.form.get('description')
         filename = request.form.get("filename")
         username = request.form.get('username')
-        print(username)
-        print(description)
-        print(filename)
-        print(title)
+
 
         with sqlite3.connect('thimf.db') as con:
             con.row_factory = sqlite3.Row
@@ -255,10 +252,33 @@ def deletePost():
 
 
 
-@app.route("/publications")
+@app.route("/search")
 @login_required
-def publications():
-    return render_template("publications.html")
+def search():
+    return render_template("search.html")
+
+
+@app.route("/searchAjax")
+def searchAjax():
+    query = request.args.get('q','').lower()
+
+    with sqlite3.connect('thimf.db') as db :
+        db.row_factory = sqlite3.Row
+        posts_rows = db.execute('SELECT username,title,description,img FROM publications WHERE title LIKE ? OR username  LIKE ?',('%'+query+'%','%'+query+'%')).fetchall()
+
+    
+    posts = []
+    for row in posts_rows :
+        posts.append({
+
+            'username' : row['username'],
+            'title': row['title'],
+            'description':row['description'],
+            'img' :row['img']
+        })
+
+    print(posts)
+    return jsonify(posts)
 
 #Initialize server flask
 if __name__ == "__main__":

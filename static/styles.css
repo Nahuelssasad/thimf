@@ -290,5 +290,31 @@ button{
 
 #btn-post:hover {
     background-color: rgb(65, 3, 136);
-  }
+}
+#searchInput {
+    width:80% ;
+    max-width: 550px;
+    height: 40px;
+    border: #535252 1px  solid;
+    border-radius: 6px;
+}
 
+  
+#searchInput:focus
+{
+    outline: 1px solid rgb(120, 74, 146) ;
+    border: 2px solid  rgb(120, 74, 146) ;
+    outline-offset:1px ;
+}
+
+.loading {
+        text-align: center;
+        color: #666;
+        padding: 20px;
+    }
+    
+.no-results {
+        text-align: center;
+        color: #999;
+        padding: 20px;
+}
