@@ -21,7 +21,8 @@ app.config["SESSION_CACHELIB"] = FileSystemCache(cache_dir="flask_session")  # E
 
 #Configure Uploading files
 UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = {'png','jpg', 'jpeg','gif', 'webp','bmp'}
+ALLOWED_EXTENSIONS_IMG = {'png','jpg', 'jpeg','gif', 'webp','bmp'}
+ALLOWED_EXTENSIONS_VIDEO = {'mp4', 'avi', 'mov', 'wmv', 'flv', 'mkv', 'webm', 'mpeg', 'mpg', 'm4v', '3gp'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -57,7 +58,7 @@ def index():
         
         posts = con.execute("SELECT img,title,description,username FROM publications WHERE username = ?",(session['username' ],)).fetchall()
    
-    return render_template("index.html",posts =posts)
+    return render_template("index.html",posts =posts,ALLOWED_EXTENSIONS_IMG = ALLOWED_EXTENSIONS_IMG,allowed_file = allowed_file)
 
 @app.route("/login",methods=["GET","POST"])
 def login():
@@ -199,29 +200,30 @@ def posts():
     #dates form
     title = request.form.get('title')
     description = request.form.get('description')
-    image = request.files.get('image')
+    multimedia_file = request.files.get('image')
     username =session['username']
     
     #post
 
     #Verifications
     if not title:
-        title = "Nada"
+        title = "..."
     if not description :
-        description = "Nada"
-    if not image or image.filename == "":
-        image = "No se selecciono un archivo"
+        description = "..."
+    #Verification of img or video
+    if not multimedia_file or multimedia_file.filename == "":
+        filename = None
+
+    elif not allowed_file(multimedia_file.filename,ALLOWED_EXTENSIONS_IMG) and not allowed_file(multimedia_file.filename,ALLOWED_EXTENSIONS_VIDEO):
+        filename =None
+
+    else:
+        filename = secure_filename(multimedia_file.filename)
+        path =os.path.join(app.config['UPLOAD_FOLDER'],filename)
+        multimedia_file.save(path)
 
     
-    
-    filename = secure_filename(image.filename)
-    path =os.path.join(app.config['UPLOAD_FOLDER'],filename)
-    image.save(path)
-
-    #Route for sqlite
-    route_image = filename
-
-    posts = None
+    #Insert dates
     with sqlite3.connect("thimf.db") as con:
         
         con.row_factory = sqlite3.Row
@@ -239,14 +241,14 @@ def deletePost():
     if request.method == 'POST':
         title = request.form.get('title')
         description = request.form.get('description')
-        filename = request.form.get("filename")
+        
         username = request.form.get('username')
 
 
         with sqlite3.connect('thimf.db') as con:
             con.row_factory = sqlite3.Row
 
-            con.execute("DELETE FROM publications WHERE username = ? AND description  = ? AND  img = ? AND title = ? ",(username,description,filename,title))
+            con.execute("DELETE FROM publications WHERE username = ? AND description  = ?  AND title = ? ",(username,description,title))
 
     return redirect("/")
 
@@ -261,7 +263,7 @@ def search():
 @app.route("/searchAjax")
 def searchAjax():
     query = request.args.get('q','').lower()
-
+    
     with sqlite3.connect('thimf.db') as db :
         db.row_factory = sqlite3.Row
         posts_rows = db.execute('SELECT username,title,description,img FROM publications WHERE title LIKE ? OR username  LIKE ?',('%'+query+'%','%'+query+'%')).fetchall()
@@ -269,15 +271,27 @@ def searchAjax():
     
     posts = []
     for row in posts_rows :
+
+
+        if allowed_file(row['img'],ALLOWED_EXTENSIONS_IMG):
+            media_type = 'image'
+        elif allowed_file(row['img'],ALLOWED_EXTENSIONS_VIDEO):
+            media_type = 'video'
+        else:
+            media_type = 'none'
+
+
+
         posts.append({
 
             'username' : row['username'],
             'title': row['title'],
             'description':row['description'],
-            'img' :row['img']
+            'img' :row['img'],
+            'media_type':media_type
         })
 
-    print(posts)
+    
     return jsonify(posts)
 
 #Initialize server flask

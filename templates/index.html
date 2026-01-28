@@ -19,11 +19,17 @@
                 
                 {% for post in posts %}
                 <div class="items">
-                    {% if post.img  %}
+                    {% if post.img %}
+
+                        {% if allowed_file(post.img,ALLOWED_EXTENSIONS_IMG)  %}
                         <img src="{{url_for('static',filename='uploads/' + post.img)}}">
-                        
+
+                        {% else %}
+                            <video src="{{url_for('static',filename='uploads/' + post.img)}}" controls></video>
+                        {% endif %}
                     {% else%}
-                        <img src="/static/uploads/none.png">
+                        
+                        <img src="static/uploads/none.jpg">
                     {% endif %}
                     <div class="info">
                         <h3>{{ post.title }}</h3>
@@ -64,7 +70,7 @@
             <div class="modal-ContainerContent">
                 <div class="modal-formImg">
                         <label for="file-upload" class="custom-file-upload">Seleccionar Archivo</label>
-                        <input id="file-upload" type="file"  form="formInfo" accept="image/*,video/*" name="image">
+                        <input id="file-upload" type="file"  form="formInfo"  name="image">
                         <img id="imagen-reemplazo" src="" style="display: none; width: 100%; height: 100%; object-fit: cover; ">
                     
                     

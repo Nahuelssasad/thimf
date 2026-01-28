@@ -44,10 +44,31 @@ function displayResults(results){
 
     let html = '' ;
     results.forEach(result =>{
-        const imgUrl = `/static/uploads/${result.img}`;
+       let mediaHTML = '';
+
+       if (result.media_type === 'image')
+        {
+            mediaHTML = `<img src = "/static/uploads/${result.img}" alt = "${result.title} " >`
+        }
+        else if (result.media_type === 'video') 
+        {
+            mediaHTML = `<video src = "/static/uploads/${result.img}" controls></video>`
+        }
+        else
+        {
+            mediaHTML = `<img src = "/static/uploads/none.jpg" alt = "No disponible" >`
+        }
+
+
+
+
+
+
+
+
         html += `
 	        <div class="items">
-		        <img src=" ${imgUrl}">
+		        ${mediaHTML}
                    
 	            <div class="info">
 		            <h3>${result.title}</h3>
