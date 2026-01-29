@@ -10,8 +10,36 @@
     <div class="container" style="margin-top: 35px;">
         <div id="results" class="grid py-2"></div>
     </div>
+
+    <!--Modal for post-->
+        <div class="modal" tabindex="-1"   id="modalPost">
+                    <div class="modal-dialog mx-auto d-flex justify-content-center"  style="height: 400px; width: 600px;">
+                        <div class="modal-content" id="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Publicacion</h3>
+                            <button type="button" class="  btn-close " data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h4  id="modal-post-title"></h4>
+                            <div id="modal-post-media"></div>
+                            <p id="modal-post-description"></p>
+
+                        </div>
+                        <div class="modal-footer ">
+                            <p class="w-100 text-start" id="modal-post-username"></p>
+                        </div>
+                        </div>
+                    </div>
+        </div>
+
+
+
+
+
+
 {% endblock %}
 {% block scripts %}
     <script src="/static/search.js"></script>
+    <script src="/static/modalPost.js"></script>
 
 {% endblock %}

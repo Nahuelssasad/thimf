@@ -22,14 +22,36 @@
                     {% if post.img %}
 
                         {% if allowed_file(post.img,ALLOWED_EXTENSIONS_IMG)  %}
-                        <img src="{{url_for('static',filename='uploads/' + post.img)}}">
+                            <img src="{{url_for('static',filename='uploads/' + post.img)}}" 
+                                class="btn-open"
+                                data-title = "{{post.title}}"
+                                data-description = "{{post.description}}"
+                                data-username = "{{post.username}}"
+                                data-img = "{{url_for('static',filename='uploads/' + post.img)}}"
+                                data-type = "image"
+                             >
 
                         {% else %}
-                            <video src="{{url_for('static',filename='uploads/' + post.img)}}" controls></video>
+                            <video src="{{url_for('static',filename='uploads/' + post.img)}}"  
+                                class="btn-open"
+                                data-title = "{{post.title}}"
+                                data-description = "{{post.description}}"
+                                data-username = "{{post.username}}"
+                                data-img = "{{url_for('static',filename='uploads/' + post.img)}}"
+                                data-type = "video"
+                            ></video>
                         {% endif %}
                     {% else%}
                         
-                        <img src="static/uploads/none.jpg">
+                        <img src="static/uploads/none.jpg" 
+                            class="btn-open"
+                            data-title = "{{post.title}}"
+                            data-description = "{{post.description}}"
+                            data-username = "{{post.username}}"
+                            data-img = "static/uploads/none.jpg"
+                            data-type = "image"
+                          
+                        >
                     {% endif %}
                     <div class="info">
                         <h3>{{ post.title }}</h3>
@@ -45,6 +67,7 @@
                         </button>
 
                     </form>
+
                 </div>
                 {% endfor %}
             </div>
@@ -64,6 +87,31 @@
         </div>
 
 
+        <!--Modal for post-->
+        <div class="modal" tabindex="-1"   id="modalPost">
+                    <div class="modal-dialog mx-auto d-flex justify-content-center"  style="height: 400px; width: 600px;">
+                        <div class="modal-content" id="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Publicacion</h3>
+                            <button type="button" class="  btn-close " data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h4  id="modal-post-title"></h4>
+                            <div id="modal-post-media"></div>
+                            <p id="modal-post-description"></p>
+
+                        </div>
+                        <div class="modal-footer ">
+                            <p class="w-100 text-start" id="modal-post-username"></p>
+                        </div>
+                        </div>
+                    </div>
+        </div>
+
+
+
+
+        <!-- Modal for publicate-->
         <div id="modal" class="modal">
         <div class="modal-content">
             <span id = "closeModalBtn" class = "close">&times; </span>
@@ -100,5 +148,6 @@
 {% block scripts %}
     <script src="/static/textarea.js"></script>
     <script src="/static/inputImg.js"></script>
-    <script src="/static/close.js"></script>
+    <script src="/static/close.js" defer></script>
+    
 {% endblock %}

@@ -48,22 +48,44 @@ function displayResults(results){
 
        if (result.media_type === 'image')
         {
-            mediaHTML = `<img src = "/static/uploads/${result.img}" alt = "${result.title} " >`
+            mediaHTML = `<img src = "/static/uploads/${result.img}" alt = "${result.title}   " 
+            
+            class = "btn-open"
+            data-title = "${result.title}"
+            data-description = "${result.description}"
+            data-username = "${result.username}"
+            data-img = "/static/uploads/${result.img}"
+            data-type = "image"
+            
+            >`;
         }
         else if (result.media_type === 'video') 
         {
-            mediaHTML = `<video src = "/static/uploads/${result.img}" controls></video>`
+            mediaHTML = `<video src = "/static/uploads/${result.img}" 
+            
+            class = "btn-open"
+            data-title = "${result.title}"
+            data-description = "${result.description}"
+            data-username = "${result.username}"
+            data-img = "/static/uploads/${result.img}" 
+            data-type = "video"
+            
+            
+            ></video>`;
         }
         else
         {
-            mediaHTML = `<img src = "/static/uploads/none.jpg" alt = "No disponible" >`
+            mediaHTML = `<img src = "/static/uploads/none.jpg" alt = "No disponible"
+            
+            class = "btn-open"
+            data-title = "${result.title}"
+            data-description = "r${result.description}"
+            data-username = "${result.username}"
+            data-img = "/static/uploads/none.jpg"
+            data-type = "image"    
+            
+            >`;
         }
-
-
-
-
-
-
 
 
         html += `
